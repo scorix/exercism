@@ -1,3 +1,8 @@
-**/node_modules
 **/_*
-**/.pytest_cache
+
+javascript/**/node_modules
+
+python/**/.pytest_cache
+
+rust/**/target
+rust/**/Cargo.lock
