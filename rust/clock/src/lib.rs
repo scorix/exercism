@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Clock {
     hour: i32,
     minute: i32,
@@ -11,16 +11,6 @@ impl fmt::Display for Clock {
         write!(f, "{:02}:{:02}", self.hour, self.minute)
     }
 }
-
-impl PartialEq for Clock {
-    fn eq(&self, other: &Self) -> bool {
-        let clock1 = self.norm();
-        let clock2 = other.norm();
-        clock1.hour == clock2.hour && clock1.minute == clock2.minute
-    }
-}
-
-impl Eq for Clock {}
 
 impl Clock {
     pub fn new(hours: i32, minutes: i32) -> Self {
