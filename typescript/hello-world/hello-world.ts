@@ -1,6 +1,6 @@
 class HelloWorld {
     static hello() {
-        "hello world"
+        return "Hello, World!"
     }
 }
 
