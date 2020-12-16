@@ -2,5 +2,6 @@
 
 -export([accumulate/2]).
 
-accumulate(_Fn, _Ls) ->
-  undefined.
+accumulate(_, []) -> [];
+accumulate(Fn, [Head|Tail]) ->
+  [Fn(Head) | accumulate(Fn, Tail)].
