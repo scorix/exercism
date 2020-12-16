@@ -1,33 +1,26 @@
 use std::collections::HashSet;
 
 pub fn anagrams_for<'a>(word: &str, possible_anagrams: &'a [&str]) -> HashSet<&'a str> {
+    let word = word.to_lowercase();
+    let mut word_chars = word.chars().collect::<Vec<char>>();
+    word_chars.sort_unstable();
+
     possible_anagrams
         .iter()
         .cloned()
-        .filter(|a| anagram_for(word, a))
+        .filter(|a| anagram_for(&word, &word_chars, a))
         .collect()
 }
 
-fn anagram_for(word: &str, anagram: &str) -> bool {
-    if word.len() != anagram.len() {
+fn anagram_for(word: &str, word_chars: &Vec<char>, anagram: &str) -> bool {
+    let anagram = anagram.to_lowercase();
+
+    if word == anagram || word.len() != anagram.len() {
         return false;
     }
 
-    let mut wcs = word
-        .chars()
-        .map(|a| a.to_lowercase().to_string())
-        .collect::<Vec<_>>();
-    let mut ncs = anagram
-        .chars()
-        .map(|a| a.to_lowercase().to_string())
-        .collect::<Vec<_>>();
+    let mut anagram_chars = anagram.chars().collect::<Vec<char>>();
+    anagram_chars.sort_unstable();
 
-    if wcs == ncs {
-        return false;
-    }
-
-    wcs.sort();
-    ncs.sort();
-
-    wcs == ncs
+    word_chars == &anagram_chars
 }
