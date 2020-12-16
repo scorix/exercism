@@ -1,7 +1,9 @@
 **/_*
 
-javascript/**/node_modules
-javascript/**/package-lock.json
+**/node_modules
+**/package-lock.json
+
+**/yarn.lock
 
 python/**/.pytest_cache
 
