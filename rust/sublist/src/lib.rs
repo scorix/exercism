@@ -6,7 +6,7 @@ pub enum Comparison {
     Unequal,
 }
 
-pub fn sublist<T: PartialEq + std::fmt::Debug>(first_list: &[T], second_list: &[T]) -> Comparison {
+pub fn sublist<T: PartialEq>(first_list: &[T], second_list: &[T]) -> Comparison {
     if first_list.len() == second_list.len() {
         return compare_equal(first_list, second_list);
     }
@@ -34,10 +34,7 @@ fn compare_equal<T: PartialEq>(first_list: &[T], second_list: &[T]) -> Compariso
     Comparison::Equal
 }
 
-fn compare_sublist<T: PartialEq + std::fmt::Debug>(
-    shorter_list: &[T],
-    longer_list: &[T],
-) -> Comparison {
+fn compare_sublist<T: PartialEq>(shorter_list: &[T], longer_list: &[T]) -> Comparison {
     if shorter_list.len() == 0 {
         return Comparison::Sublist;
     }
