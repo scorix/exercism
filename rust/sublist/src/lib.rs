@@ -39,25 +39,10 @@ fn compare_sublist<T: PartialEq>(shorter_list: &[T], longer_list: &[T]) -> Compa
         return Comparison::Sublist;
     }
 
-    let mut result = Comparison::Sublist;
-
-    for idx in 0..longer_list.len() {
-        for shorter_idx in 0..shorter_list.len() {
-            if idx + shorter_idx >= longer_list.len() {
-                break;
-            }
-            if longer_list[idx + shorter_idx] != shorter_list[shorter_idx] {
-                result = Comparison::Unequal;
-                break;
-            }
-            if shorter_idx == shorter_list.len() - 1 {
-                result = Comparison::Sublist;
-            }
-        }
-
-        match result {
-            Comparison::Sublist => return Comparison::Sublist,
-            _ => continue,
+    for list in longer_list.windows(shorter_list.len()) {
+        match compare_equal(list, shorter_list) {
+            Comparison::Equal => return Comparison::Sublist,
+            _ => continue
         }
     }
 
