@@ -7,33 +7,38 @@ pub enum Comparison {
 }
 
 pub fn sublist<T: PartialEq>(first_list: &[T], second_list: &[T]) -> Comparison {
-    if first_list == second_list {
-        return Comparison::Equal;
+    match first_list.len() {
+        0 => Comparison::Sublist,
+        x if x < second_list.len() => expect(first_list, second_list, Comparison::Sublist),
+        x if x == second_list.len() => expect(first_list, second_list, Comparison::Equal),
+        x if x > second_list.len() => expect(first_list, second_list, Comparison::Superlist),
+        _ => Comparison::Unequal,
     }
-
-    compare(first_list, second_list)
 }
 
-fn compare<T: PartialEq>(first_list: &[T], second_list: &[T]) -> Comparison {
-    let mut res = Comparison::Superlist;
-    let mut longer_list = first_list;
-    let mut shorter_list = second_list;
+fn expect<T: PartialEq>(first_list: &[T], second_list: &[T], comparison: Comparison) -> Comparison {
+    let expected = match comparison {
+        Comparison::Equal => first_list == second_list,
+        Comparison::Sublist => contains(first_list, second_list),
+        Comparison::Superlist => contains(second_list, first_list),
+        _ => true,
+    };
 
-    if first_list.len() < second_list.len() {
-        res = Comparison::Sublist;
-        longer_list = second_list;
-        shorter_list = first_list;
-    }
-
-    if shorter_list.len() == 0 {
-        return res;
-    }
-
-    for sublist in longer_list.windows(shorter_list.len()) {
-        if sublist == shorter_list {
-            return res
-        }
+    if expected {
+        return comparison;
     }
 
     Comparison::Unequal
+}
+
+fn contains<T: PartialEq>(first_list: &[T], second_list: &[T]) -> bool {
+    match first_list.len() {
+        0 => return true,
+        x if x >= second_list.len() => return false,
+        _ => (),
+    }
+
+    second_list
+        .windows(first_list.len())
+        .any(|window| window == first_list)
 }
