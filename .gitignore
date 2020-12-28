@@ -9,3 +9,5 @@ python/**/.pytest_cache
 
 rust/**/target
 rust/**/Cargo.lock
+
+c/**/tests.out*
