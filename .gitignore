@@ -11,3 +11,5 @@ rust/**/target
 rust/**/Cargo.lock
 
 c/**/tests.out*
+
+.vscode
