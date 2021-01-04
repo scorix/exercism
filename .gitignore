@@ -13,3 +13,4 @@ rust/**/Cargo.lock
 c/**/tests.out*
 
 .vscode
+**/.DS_Store
